@@ -1,32 +1,51 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component, ViewChild } from '@angular/core'
+import { MatPaginator } from '@angular/material/paginator'
+import { MatTableDataSource } from '@angular/material/table'
 
 @Component({
   selector: 'app-root',
-  template: `
-    <!--The content below is only a placeholder and can be replaced.-->
-    <div style="text-align:center" class="content">
-      <h1>
-        Welcome to {{title}}!
-      </h1>
-      <span style="display: block">{{ title }} app is running!</span>
-      <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
-    </div>
-    <h2>Here are some links to help you start: </h2>
-    <ul>
-      <li>
-        <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-      </li>
-      <li>
-        <h2><a target="_blank" rel="noopener" href="https://angular.io/cli">CLI Documentation</a></h2>
-      </li>
-      <li>
-        <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-      </li>
-    </ul>
-    
-  `,
-  styles: []
+  templateUrl: './app.component.html',
+  styles: [],
 })
-export class AppComponent {
-  title = 'ng-loop-through-multiple-in-table';
+export class AppComponent implements AfterViewInit {
+  title = 'ng-loop-through-multiple-in-table'
+  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol']
+  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA)
+
+  @ViewChild(MatPaginator)
+  paginator!: MatPaginator
+
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator
+  }
 }
+
+export interface PeriodicElement {
+  name: string
+  position: number
+  weight: number
+  symbol: string
+}
+
+const ELEMENT_DATA: PeriodicElement[] = [
+  { position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
+  { position: 2, name: 'Helium', weight: 4.0026, symbol: 'He' },
+  { position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li' },
+  { position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be' },
+  { position: 5, name: 'Boron', weight: 10.811, symbol: 'B' },
+  { position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C' },
+  { position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N' },
+  { position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O' },
+  { position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F' },
+  { position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne' },
+  { position: 11, name: 'Sodium', weight: 22.9897, symbol: 'Na' },
+  { position: 12, name: 'Magnesium', weight: 24.305, symbol: 'Mg' },
+  { position: 13, name: 'Aluminum', weight: 26.9815, symbol: 'Al' },
+  { position: 14, name: 'Silicon', weight: 28.0855, symbol: 'Si' },
+  { position: 15, name: 'Phosphorus', weight: 30.9738, symbol: 'P' },
+  { position: 16, name: 'Sulfur', weight: 32.065, symbol: 'S' },
+  { position: 17, name: 'Chlorine', weight: 35.453, symbol: 'Cl' },
+  { position: 18, name: 'Argon', weight: 39.948, symbol: 'Ar' },
+  { position: 19, name: 'Potassium', weight: 39.0983, symbol: 'K' },
+  { position: 20, name: 'Calcium', weight: 40.078, symbol: 'Ca' },
+]
